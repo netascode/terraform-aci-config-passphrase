@@ -16,35 +16,21 @@ terraform {
 module "main" {
   source = "../.."
 
-  name        = "ABC"
-  alias       = "ALIAS"
-  description = "DESCR"
+  config_passphrase = "Cisco123!Cisco123!"
 }
 
-data "aci_rest_managed" "fvTenant" {
-  dn = "uni/tn-ABC"
+data "aci_rest_managed" "pkiExportEncryptionKey" {
+  dn = "uni/exportcryptkey"
 
   depends_on = [module.main]
 }
 
-resource "test_assertions" "fvTenant" {
-  component = "fvTenant"
+resource "test_assertions" "pkiExportEncryptionKey" {
+  component = "pkiExportEncryptionKey"
 
-  equal "name" {
-    description = "name"
-    got         = data.aci_rest_managed.fvTenant.content.name
-    want        = "ABC"
-  }
-
-  equal "nameAlias" {
-    description = "nameAlias"
-    got         = data.aci_rest_managed.fvTenant.content.nameAlias
-    want        = "ALIAS"
-  }
-
-  equal "descr" {
-    description = "descr"
-    got         = data.aci_rest_managed.fvTenant.content.descr
-    want        = "DESCR"
+  equal "strongEncryptionEnabled" {
+    description = "strongEncryptionEnabled"
+    got         = data.aci_rest_managed.pkiExportEncryptionKey.content.strongEncryptionEnabled
+    want        = "yes"
   }
 }

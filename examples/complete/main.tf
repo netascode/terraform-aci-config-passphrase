@@ -1,8 +1,6 @@
-module "aci_scaffolding" {
-  source  = "netascode/scaffolding/aci"
-  version = ">= 0.0.1"
+module "aci_config_passphrase" {
+  source  = "netascode/config-passphrase/aci"
+  version = ">= 0.1.0"
 
-  name        = "ABC"
-  alias       = "ABC-ALIAS"
-  description = "My Description"
+  config_passphrase = "Cisco123!Cisco123!"
 }
